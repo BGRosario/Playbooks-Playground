@@ -13,5 +13,5 @@
     firewalld:
       service: http
       permanent: true
-      state: Disable
+      state: disable
       immediate: true
