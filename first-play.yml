@@ -35,15 +35,16 @@
 
 - hosts: web_servers
   become: true
+  tasks:
 
   - name: install httpd/apache packages with dependencies
-    dnf: 
+    ansible.builtin.dnf: 
       name: httpd 
       state: latest
       update_cache: yes
 
   - name: Start and enable httpd service
-    service:
+    ansible.builtin.service:
       name: httpd
       state: started
       enabled: yes
