@@ -1,7 +1,6 @@
 ---
 
-- name: Configure Default Packages 
-  hosts: all
+- hosts: all
   become: true 
   tags: 
     - newborn
