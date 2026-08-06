@@ -1,0 +1,54 @@
+---
+
+- hosts: all
+  become: true 
+  tags: newborn
+  pre-tasks:
+
+  - name: Ensure default packcages are installed (OS Rocky)
+    ansible.builtin.dnf: 
+      name: - net-tools
+            - curl
+            - wget
+            - vim
+            - htop
+            - bash-completion
+            - rsync
+    state: present
+    update_cache: yes
+    when: ansible_distrobution_version == "Rocky"
+
+  - name: Ensure default packcages are installed (OS Ubuntu)
+    ansible.builtin.apt: 
+      name: - net-tools
+            - curl
+            - wget
+            - vim
+            - htop
+            - bash-completion
+            - rsync
+    state: present
+    update_cache: yes
+    when: ansible_distrobution_version == "Ubnuntu"
+
+- hosts: web_servers
+  become: true
+
+  - name: install httpd/apache packages with dependencies
+    dnf: 
+      name: httpd 
+      state: latest
+      update_cache: yes
+
+  - name: Start and enable httpd service
+    service:
+      name: httpd
+      state: started
+      enabled: yes
+
+  - name: Allow HTTP
+    firewalld:
+      service: http
+      permanent: true
+      state: enabled
+      immediate: true
