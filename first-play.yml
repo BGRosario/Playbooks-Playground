@@ -1,11 +1,12 @@
 ---
 
-- hosts: all
+- name: Add default packages
+  hosts: all
   become: true 
   tags: 
     - newborn
 
-  pre-tasks:
+  tasks:
   - name: Ensure default packcages are installed (OS Rocky)
     ansible.builtin.dnf: 
       name: 
@@ -16,9 +17,9 @@
             - htop
             - bash-completion
             - rsync
-    state: present
-    update_cache: yes
-    when: ansible_distrobution_version == "Rocky"
+      state: present
+      update_cache: yes
+    when: ansible_distribution_version == "Rocky"
 
   - name: Ensure default packcages are installed (OS Ubuntu)
     ansible.builtin.apt: 
@@ -30,11 +31,11 @@
             - htop
             - bash-completion
             - rsync
-    state: present
-    update_cache: yes
-    when: ansible_distrobution_version == "Ubnuntu"
+      state: present
+      update_cache: yes
+    when: ansible_distribution_version == "Ubuntu"
 
-- hosts: web_servers
+- hosts: web-servers
   become: true
   tasks:
 
@@ -45,7 +46,7 @@
       update_cache: yes
 
   - name: Start and enable httpd service
-    ansible.builtin.service:
+    service:
       name: httpd
       state: started
       enabled: yes
