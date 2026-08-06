@@ -1,10 +1,12 @@
 ---
 
-- hosts: all
+- name: Configure Default Packages 
+  hosts: all
   become: true 
-  tags: newborn
-  pre-tasks:
+  tags: 
+    - newborn
 
+  pre-tasks:
   - name: Ensure default packcages are installed (OS Rocky)
     ansible.builtin.dnf: 
       name: 
