@@ -7,7 +7,8 @@
 
   - name: Ensure default packcages are installed (OS Rocky)
     ansible.builtin.dnf: 
-      name: - net-tools
+      name: 
+            - net-tools
             - curl
             - wget
             - vim
@@ -20,7 +21,8 @@
 
   - name: Ensure default packcages are installed (OS Ubuntu)
     ansible.builtin.apt: 
-      name: - net-tools
+      name: 
+            - net-tools
             - curl
             - wget
             - vim
