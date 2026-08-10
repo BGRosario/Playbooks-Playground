@@ -7,9 +7,16 @@
     - newborn
 
   tasks:
+   
+  - name: Install EPEL repository
+    ansible.builtin.dnf:
+     name: epel-release
+     state: present
+    when: ansible_distribution == "Rocky" 
+
   - name: Ensure default packcages are installed (OS Rocky)
     ansible.builtin.dnf: 
-      name: 
+      name:
             - net-tools
             - curl
             - wget
@@ -19,7 +26,7 @@
             - rsync
       state: present
       update_cache: yes
-    when: ansible_distribution_version == "Rocky"
+    when: ansible_distribution == "Rocky"
 
   - name: Ensure default packcages are installed (OS Ubuntu)
     ansible.builtin.apt: 
@@ -33,10 +40,11 @@
             - rsync
       state: present
       update_cache: yes
-    when: ansible_distribution_version == "Ubuntu"
+    when: ansible_distribution == "Ubuntu"
 
 - hosts: web-servers
   become: true
+  tags: apache   
   tasks:
 
   - name: install httpd/apache packages with dependencies
