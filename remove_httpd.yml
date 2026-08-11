@@ -1,6 +1,7 @@
 ---
 
 - hosts: web-servers
+  gather_facts: false
   become: true 
   tasks:
 
