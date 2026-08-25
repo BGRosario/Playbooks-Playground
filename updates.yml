@@ -1,0 +1,16 @@
+--- 
+
+- name: Updates for managed hosts
+  hosts: all
+  gather_facts: false
+  become: true
+  tags: updates
+
+  tasks:
+
+    - name: RHEL/Rocky devices
+      ansible.builtin.dnf: 
+       name: "*"
+       state: latest
+       update_cache: yes
+
